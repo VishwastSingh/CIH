@@ -4,13 +4,13 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Clinical Inquiry Forwarder</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Vishwast Forwarder"/>
+  <DisplayName DefaultValue="Clinical Inquiry Hub Forwarder"/>
   <Description DefaultValue="Forward emails to Clinical Inquiry Hub"/>
-  <IconUrl DefaultValue="https://collab.lilly.com/:i:/r/sites/Outlook_CIH/CIHForwarder/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://collab.lilly.com/:i:/r/sites/Outlook_CIH/CIHForwarder/icon-128.png"/>
+  <IconUrl DefaultValue="https://vishwastsingh.github.io/CIH/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://vishwastsingh.github.io/CIH/icon-128.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
+    <AppDomain>https://vishwastsingh.github.io</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>
@@ -23,7 +23,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://collab.lilly.com/:u:/r/sites/Outlook_CIH/CIHForwarder/taskpane.html"/>
+        <SourceLocation DefaultValue="https://vishwastsingh.github.io/CIH/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -85,13 +85,13 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://collab.lilly.com/:i:/r/sites/Outlook_CIH/CIHForwarder/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://collab.lilly.com/:i:/r/sites/Outlook_CIH/CIHForwarder/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://collab.lilly.com/:i:/r/sites/Outlook_CIH/CIHForwarder/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://vishwastsingh.github.io/CIH/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://vishwastsingh.github.io/CIH/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://vishwastsingh.github.io/CIH/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://collab.lilly.com/:u:/r/sites/Outlook_CIH/CIHForwarder/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://collab.lilly.com/:u:/r/sites/Outlook_CIH/CIHForwarder/commands.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://vishwastsingh.github.io/CIH/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://vishwastsingh.github.io/CIH/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Clinical Inquiry Forwarder"/>
