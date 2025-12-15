@@ -91,25 +91,26 @@ function sanitizeHtmlForForwarding(html) {
 function openComposeWindow(item, forwardTo, messageArea, forwardButton) {
   const subject = "FW: " + item.subject;
   
-  // Get body as PLAIN TEXT to avoid @mention HTML tags
-  item.body.getAsync(Office.CoercionType.Text, function(bodyResult) {
+  item.body.getAsync(Office.CoercionType.Html, function(bodyResult) {
     if (bodyResult.status === Office.AsyncResultStatus.Succeeded) {
       let body = bodyResult.value;
       const from = item.from;
       const dateTimeCreated = item.dateTimeCreated;
       
-      // Format as plain text (no HTML) to prevent @mention processing
-      const forwardHeader = `\n\n---------- Forwarded message ---------\n` +
-                          `From: ${from.displayName} <${from.emailAddress}>\n` +
-                          `Date: ${dateTimeCreated}\n` +
-                          `Subject: ${item.subject}\n\n`;
+      // Sanitize the body to remove @mention triggers
+      body = sanitizeHtmlForForwarding(body);
+      
+      const forwardHeader = `<br><br>---------- Forwarded message ---------<br>` +
+                          `From: ${from.displayName} &lt;${from.emailAddress}&gt;<br>` +
+                          `Date: ${dateTimeCreated}<br>` +
+                          `Subject: ${item.subject}<br><br>`;
       
       const fullBody = forwardHeader + body;
       
       const forwardMessage = {
         toRecipients: [forwardTo],
         subject: subject,
-        body: fullBody  // Using 'body' instead of 'htmlBody' sends as plain text
+        htmlBody: fullBody
       };
       
       Office.context.mailbox.displayNewMessageForm(forwardMessage);
