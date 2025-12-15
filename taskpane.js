@@ -46,7 +46,7 @@ function tryEWSForward(item, forwardTo, messageArea, forwardButton) {
             </t:Mailbox>
           </t:ToRecipients>
           <t:ReferenceItemId Id="${ewsId}" />
-          <t:NewBodyContent BodyType="Text">Forwarded via Vishwast Forwarder</t:NewBodyContent>
+          <t:NewBodyContent BodyType="Text">Forwarded via Clinical Inquiry Hub Forwarder</t:NewBodyContent>
         </t:ForwardItem>
       </m:Items>
     </m:CreateItem>
