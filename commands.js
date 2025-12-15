@@ -74,8 +74,10 @@ function tryEWSForward(item, forwardTo, event) {
         persistent: false
       });
       
-      openComposeWindowDirect(item, forwardTo);
-      event.completed();
+      // Add delay before opening compose window and completing event
+      setTimeout(() => {
+        openComposeWindowDirect(item, forwardTo, event);
+      }, 500);
     }
   });
 }
@@ -88,7 +90,7 @@ function sanitizeHtmlForForwarding(html) {
   return html;
 }
 
-function openComposeWindowDirect(item, forwardTo) {
+function openComposeWindowDirect(item, forwardTo, event) {
   const subject = "FW: " + item.subject;
   
   item.body.getAsync(Office.CoercionType.Html, function(bodyResult) {
@@ -113,7 +115,30 @@ function openComposeWindowDirect(item, forwardTo) {
         htmlBody: fullBody
       };
       
-      Office.context.mailbox.displayNewMessageForm(forwardMessage);
+      try {
+        Office.context.mailbox.displayNewMessageForm(forwardMessage);
+        // Wait a bit to ensure the window opens before completing
+        setTimeout(() => {
+          event.completed();
+        }, 1000);
+      } catch (error) {
+        console.error('Error opening compose window:', error);
+        Office.context.mailbox.item.notificationMessages.addAsync("forward-error", {
+          type: "errorMessage",
+          message: "Could not open compose window. Please use 'Show Task Pane' instead.",
+          icon: "icon-16",
+          persistent: true
+        });
+        event.completed();
+      }
+    } else {
+      Office.context.mailbox.item.notificationMessages.addAsync("forward-error", {
+        type: "errorMessage",
+        message: "Could not prepare forward. Please use 'Show Task Pane' instead.",
+        icon: "icon-16",
+        persistent: true
+      });
+      event.completed();
     }
   });
 }
