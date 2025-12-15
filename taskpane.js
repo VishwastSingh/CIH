@@ -46,7 +46,7 @@ function tryEWSForward(item, forwardTo, messageArea, forwardButton) {
             </t:Mailbox>
           </t:ToRecipients>
           <t:ReferenceItemId Id="${ewsId}" />
-          <t:NewBodyContent BodyType="Text">Forwarded via Vishwast Forwarder</t:NewBodyContent>
+          <t:NewBodyContent BodyType="Text">Forwarded via Clinical Inquiry Hub Forwarder</t:NewBodyContent>
         </t:ForwardItem>
       </m:Items>
     </m:CreateItem>
@@ -74,14 +74,31 @@ function tryEWSForward(item, forwardTo, messageArea, forwardButton) {
   });
 }
 
+// Function to sanitize HTML and remove @mentions that trigger auto-recipient addition
+function sanitizeHtmlForForwarding(html) {
+  // Remove Outlook @mention spans/divs that trigger auto-recipient addition
+  // These typically have data-* attributes or specific classes
+  html = html.replace(/<a[^>]*data-auth[^>]*>(@[^<]*)<\/a>/gi, '$1');
+  html = html.replace(/<span[^>]*data-mention[^>]*>([^<]*)<\/span>/gi, '$1');
+  
+  // Replace @mentions with [at]mentions to prevent auto-processing
+  // This regex finds @word patterns that are likely mentions
+  html = html.replace(/@(\w+)/g, '&#64;$1');
+  
+  return html;
+}
+
 function openComposeWindow(item, forwardTo, messageArea, forwardButton) {
   const subject = "FW: " + item.subject;
   
   item.body.getAsync(Office.CoercionType.Html, function(bodyResult) {
     if (bodyResult.status === Office.AsyncResultStatus.Succeeded) {
-      const body = bodyResult.value;
+      let body = bodyResult.value;
       const from = item.from;
       const dateTimeCreated = item.dateTimeCreated;
+      
+      // Sanitize the body to remove @mention triggers
+      body = sanitizeHtmlForForwarding(body);
       
       const forwardHeader = `<br><br>---------- Forwarded message ---------<br>` +
                           `From: ${from.displayName} &lt;${from.emailAddress}&gt;<br>` +
